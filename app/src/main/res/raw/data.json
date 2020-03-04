@@ -1,0 +1,71 @@
+{
+
+  "data" : [
+
+    {
+
+      "productId" : 1,
+
+      "productName": "Meizu M5 Note",
+
+      "productSlug": "meizu-m5-note",
+
+      "productQty": 15,
+
+      "productImage": "http://img.com/600x400",
+
+      "merchant": {
+
+        "merchantId": 2,
+
+        "merchantName": "Meizu Store ID",
+
+        "merchantSlug": "meizu-store-id"
+
+      },
+
+      "category": {
+
+        "categoryId": 1,
+
+        "categoryName": "Handphone"
+
+      }
+
+    },
+
+    {
+
+      "productId" : 2,
+
+      "productName": "Macbook Pro late 2011",
+
+      "productSlug": "macbook-pro-late-2011",
+
+      "productQty": 15,
+
+      "productImage": "http://img.com/600x400",
+
+      "merchant": {
+
+        "merchantId": 1,
+
+        "merchantName": "myBox iStore",
+
+        "merchantSlug": "mybox-istore"
+
+      },
+
+      "Category": {
+
+        "categoryId": 2,
+
+        "categoryName": "Laptop"
+
+      }
+
+    }
+
+  ]
+
+}

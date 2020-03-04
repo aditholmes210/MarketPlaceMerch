@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">MarketPlaceMerch</string>
+    <string name="product_name">Product Name</string>
+    <string name="product_nm">product name</string>
+    <string name="product_price">Product Price</string>
+    <string name="prc_num">Ex : Rp. 100000</string>
+    <string name="product_desc">Product Description</string>
+    <string name="desc">Description</string>
+    <string name="product_qty">Product Quantity</string>
+    <string name="qty">Ex : 10</string>
+    <string name="product_cat">Product Category</string>
+    <string name="product_img">Product Image</string>
+    <string name="choose_img">Choose Image</string>
+    <string name="add_prod">Add Product</string>
+</resources>

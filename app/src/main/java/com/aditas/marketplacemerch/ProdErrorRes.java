@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductErrorResponse {
+public class ProdErrorRes {
     @SerializedName("productName")
     List<String> prodNameError = new ArrayList<>();
     @SerializedName("productQty")
