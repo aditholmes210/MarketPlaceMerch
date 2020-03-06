@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.aditas.marketplacemerch.Activity.Adapt;
 import com.aditas.marketplacemerch.Entity.Category;
+import com.aditas.marketplacemerch.Entity.ProdErrorRes;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;

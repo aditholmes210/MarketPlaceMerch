@@ -1,4 +1,4 @@
-package com.aditas.marketplacemerch;
+package com.aditas.marketplacemerch.Entity;
 
 
 import com.google.gson.annotations.SerializedName;
