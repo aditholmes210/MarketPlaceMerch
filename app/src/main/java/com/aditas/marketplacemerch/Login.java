@@ -2,6 +2,7 @@ package com.aditas.marketplacemerch;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,8 +13,6 @@ import com.aditas.marketplacemerch.Network.VolleyService;
 import com.aditas.marketplacemerch.Util.TokenManager;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.android.material.button.MaterialButton;
 import com.google.gson.Gson;
@@ -33,32 +32,27 @@ public class Login extends AppCompatActivity {
     @BindView(R.id.et_mail) EditText etMail;
     @BindView(R.id.et_pass) EditText etPass;
     @BindView(R.id.btn_login)
-    MaterialButton btnLogin;
+    Button btnLogin;
 
-    final String FIRST_NAME = "first_name";
-    final String LAST_NAME = "last_name";
     final String EMAIL = "email";
-    final String PASSWORD = "[assword";
-    final String CPASSWORD = "confirm_password";
-    final String IS_MERCHANT = "is_merchant";
-    final String MERCHANT_NAME = "merchant_name";
+    final String PASSWORD = "password";
 
     AccessToken at;
 
-    String firstName, lastName, email, pass, confPass, merchName;
-    int isMerch = 1; //set 1 for true, set 1 in merch and 0 in cust
+    String email, pass;
+    //int isMerch = 1; //set 1 for true, set 1 in merch and 0 in cust
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        ButterKnife.bind(this)
+        ButterKnife.bind(this);
     }
 
     @OnClick(R.id.tv_login)
     public void goToRegist(){
         Intent intent = new Intent (Login.this, Regist.class);
-        startActivity();
+        startActivity(intent);
     }
 
     @OnClick(R.id.btn_login)
@@ -74,28 +68,24 @@ public class Login extends AppCompatActivity {
 
         String url = "http://210.210.154.65:4444/api/auth/login";
         StringRequest registReq = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+                response -> {
                         //do whatever u want with response
                         at = new Gson().fromJson(response, AccessToken.class);
                         TokenManager.getInstance(getSharedPreferences("pref", MODE_PRIVATE)).saveToken(at);
-                    }
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                error -> {
                         String statusCode = String.valueOf(error.networkResponse.statusCode);
                         String body = "";
                         try{
                             body = new String(error.networkResponse.data, "UTF-8");
+                            System.out.println(body);
                             JSONObject res = new JSONObject(body);
 
-                            RegistErrorRes errorResponse = new Gson().fromJson(res.getJSONObject("error").toString(),RegistErrorRes.class);
+                            RegistErrorRes errorRes = new Gson().fromJson(res.getJSONObject("error").toString(),RegistErrorRes.class);
 
-                            if(errorResponse.getEmailError().size() > 0){
-                                if(errorResponse.getEmailError().get(0) != null){
-                                    etMail.setError(errorResponse.getEmailError().get(0));
+                            if(errorRes.getEmailError().size() > 0){
+                                if(errorRes.getEmailError().get(0) != null){
+                                    etMail.setError(errorRes.getEmailError().get(0));
                                 }
                             }
                         }
@@ -105,17 +95,16 @@ public class Login extends AppCompatActivity {
                         catch (JSONException e){
                             e.printStackTrace();
                         }
-                    }
                 }){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> head = new Hashtable<>();
-
-                head.put("Accept","application/json");
-                head.put("Content-Type","application/x-www-form-urlencoded");
-
-                return head;
-            }
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                Map<String,String> head = new Hashtable<>();
+//
+//                head.put("Accept","application/json");
+//                head.put("Content-Type","application/x-www-form-urlencoded");
+//
+//                return head;
+//            }
 
             @Override
             public Map<String, String> getParams() throws AuthFailureError {

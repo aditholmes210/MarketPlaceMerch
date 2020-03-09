@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,7 +14,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="10dp"
-        android:text="Lets sell anything, join us."
+        android:text="@string/sign_up"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -25,7 +26,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:hint="First Name"
+        android:hint="@string/first"
+        android:inputType="text"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="@id/tv_pad"
         app:layout_constraintRight_toRightOf="@id/tv_pad"
@@ -36,7 +38,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:hint="Last Name"
+        android:hint="@string/last"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="@id/tv_pad"
         app:layout_constraintRight_toRightOf="@id/tv_pad"
@@ -47,7 +49,7 @@
         android:layout_marginTop="8dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Email"
+        android:hint="@string/email"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="@id/tv_pad"
         app:layout_constraintRight_toRightOf="@id/tv_pad"
@@ -58,7 +60,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:hint="Password"
+        android:hint="@string/pass"
         android:inputType="textPassword"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="@id/tv_pad"
@@ -70,33 +72,31 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:hint="Confirm Password"
+        android:hint="@string/confirm"
         android:inputType="textPassword"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="@id/tv_pad"
         app:layout_constraintRight_toRightOf="@id/tv_pad"
         app:layout_constraintTop_toBottomOf="@id/et_pass" />
 
-    <androidx.appcompat.widget.AppCompatCheckBox
-        android:id="@+id/checkbox_merch"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Sign up as a merchant too ?"
-        app:layout_constraintLeft_toLeftOf="@id/tv_pad"
-        app:layout_constraintRight_toRightOf="@id/tv_pad"
-        app:layout_constraintTop_toBottomOf="@id/et_confirm"/>
 
     <EditText
         android:id="@+id/et_merch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:hint="Merchant Name"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:hint="@string/merch_name"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="@id/tv_pad"
         app:layout_constraintRight_toRightOf="@id/tv_pad"
-        app:layout_constraintTop_toBottomOf="@id/checkbox_merch"
-        android:visibility="invisible"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_regist"
@@ -104,7 +104,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="Sign up"
+        android:text="@string/sign_up"
         android:textAppearance="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:textColor="@android:color/darker_gray"
         android:textSize="20sp"
@@ -121,10 +121,10 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="16dp"
-        android:text="Already have an account, Log in."
+        android:text="@string/already"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="@id/btn_regist" />
 
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

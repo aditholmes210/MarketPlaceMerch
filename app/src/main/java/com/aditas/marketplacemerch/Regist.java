@@ -2,21 +2,21 @@ package com.aditas.marketplacemerch;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.CheckBox;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.aditas.marketplacemerch.Entity.AccessToken;
 import com.aditas.marketplacemerch.Entity.RegistErrorRes;
-import com.aditas.marketplacemerch.Network.VolleyService;
 import com.aditas.marketplacemerch.Util.TokenManager;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
+import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -26,53 +26,36 @@ import java.io.UnsupportedEncodingException;
 import java.util.Hashtable;
 import java.util.Map;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 public class Regist extends AppCompatActivity {
-    @BindView(R.id.et_first)EditText etFirst;
-    @BindView(R.id.et_last) EditText etLast;
-    @BindView(R.id.et_mail) EditText etMail;
-    @BindView(R.id.et_pass) EditText etPass;
-    @BindView(R.id.et_confirm) EditText etConfirm;
-    @BindView(R.id.et_merch) EditText etMerch;
-    @BindView(R.id.checkbox_merch) CheckBox checkBoxMerch;
-
+    private EditText etFirst, etLast, etMail, etPass, etConf, etMerch;
+    private Button btnReg;
+    private TextView tvAlready;
     AccessToken at;
-
+    RequestQueue rq;
     final String FIRST_NAME = "first_name";
     final String LAST_NAME = "last_name";
     final String EMAIL = "email";
     final String PASSWORD = "password";
     final String CPASSWORD = "confirm_password";
-    final String IS_MERCHANT = "is_merchant";
     final String MERCHANT_NAME = "merchant_name";
 
     String firstName, lastName, email, password, confirm, merchName;
-    int isMerch = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_regist);
-        ButterKnife.bind(this);
+        rq = Volley.newRequestQueue(this);
+        init();
     }
 
     @OnClick(R.id.tv_login)
     public void goToLogin(){
         Intent intent = new Intent(Regist.this, Login.class);
         startActivity(intent);
-    }
-
-    @OnCheckedChanged(R.id.checkbox_merch)
-    public void toggleShowMerch(){
-        if(checkBoxMerch.isChecked()){
-            etMerch.setVisibility(View.VISIBLE);
-        } else{
-            etMerch.setVisibility(View.INVISIBLE);
-        }
     }
 
     @OnClick(R.id.btn_regist)
@@ -82,37 +65,42 @@ public class Regist extends AppCompatActivity {
         }
     }
 
+    private void init(){
+        etFirst = findViewById(R.id.et_first);
+        etLast = findViewById(R.id.et_last);
+        etMail = findViewById(R.id.et_mail);
+        etPass = findViewById(R.id.et_pass);
+        etConf = findViewById(R.id.et_confirm);
+        etMerch = findViewById(R.id.et_merch);
+        btnReg = findViewById(R.id.btn_regist);
+        tvAlready = findViewById(R.id.tv_login);
+    }
+
     private void postDataRegist() {
         firstName = etFirst.getText().toString();
         lastName = etLast.getText().toString();
         email = etMail.getText().toString();
         password = etPass.getText().toString();
-        confirm = etConfirm.getText().toString();
-        isMerch = 1;
+        confirm = etConf.getText().toString();
+        //isMerch = 1;
         merchName = etMerch.getText().toString();
 
         String url = "http://210.210.154.65:4444/api/auth/signup";
         StringRequest registerReq = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+                response -> {
                         // do whatever u want with response
                         at = new Gson().fromJson(response,AccessToken.class);
-
                         TokenManager.getInstance(getSharedPreferences("pref",MODE_PRIVATE)).saveToken(at);
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
+                        },
+                error -> {
                         String statusCode = String.valueOf( error.networkResponse.statusCode );
                         String body = "";
                         try {
                             body = new String(error.networkResponse.data, "UTF-8");
                             JSONObject res = new JSONObject(body);
 
-                            RegistErrorRes errorResponse = new Gson().fromJson(res.getJSONObject("error").toString(),RegisterErrorResponse.class);
+                            RegistErrorRes errorResponse = new Gson().fromJson(res.getJSONObject("error").toString(),RegistErrorRes.class);
 
                             if(errorResponse.getEmailError().size() > 0){
                                 if(errorResponse.getEmailError().get(0) != null){
@@ -126,15 +114,13 @@ public class Regist extends AppCompatActivity {
                         catch (JSONException e){
                             e.printStackTrace();
                         }
-                    }
-                }){
+            }){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String,String> head = new Hashtable<>();
 
                 head.put("Accept","application/json");
                 head.put("Content-Type","application/x-www-form-urlencoded");
-
                 return head;
             }
 
@@ -142,20 +128,19 @@ public class Regist extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> param = new Hashtable<>();
 
-                param.put(FIRST_NAME,firstName);
-                param.put(LAST_NAME,lastName);
-                param.put(EMAIL,email);
-                param.put(PASSWORD,password);
-                param.put(CPASSWORD,confirm);
-                param.put(IS_MERCHANT,String.valueOf(isMerch));
+                param.put(FIRST_NAME, firstName);
+                param.put(LAST_NAME, lastName);
+                param.put(EMAIL ,email);
+                param.put(PASSWORD, password);
+                param.put(CPASSWORD, confirm);
+                //param.put(IS_MERCHANT,String.valueOf(isMerch));
                 param.put(MERCHANT_NAME, merchName);
-
                 return param;
             }
         };
 
-        VolleyService.getInstance(getApplicationContext()).addToRequestQueue(registerReq);
-
+        //VolleyService.getInstance(getApplicationContext()).addToReqQueue(registerReq);
+        rq.add(registerReq);
     }
 
     private boolean isValidInput() {
@@ -188,19 +173,19 @@ public class Regist extends AppCompatActivity {
             isValid = false;
         }
 
-        if(etConfirm.getText().toString().isEmpty()){
-            etConfirm.setError("Confirm password cannot be empty");
+        if(etConf.getText().toString().isEmpty()){
+            etConf.setError("Confirm password cannot be empty");
             isValid = false;
         }
-        else if(!(etConfirm.getText().toString().equals(etPass.getText().toString()))){
-            etConfirm.setError("Password did not match");
+        else if(!(etConf.getText().toString().equals(etPass.getText().toString()))){
+            etConf.setError("Password did not match");
             isValid = false;
         }
 
-        if(etMerch.getText().toString().isEmpty()){
-            etMerch.setError("Merchant Name cannot be empty");
-            isValid = false;
-        }
+//        if(etMerch.getText().toString().isEmpty()){
+//            etMerch.setError("Merchant Name cannot be empty");
+//            isValid = false;
+//        }
 
         return isValid;
     }
