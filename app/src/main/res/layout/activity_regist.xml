@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,122 +9,211 @@
 
     <TextView
         android:id="@+id/tv_pad"
+        android:layout_width="165dp"
+        android:layout_height="47dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:text="@string/reg"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toTopOf="@+id/ll_first"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/ll_first"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="10dp"
-        android:text="@string/sign_up"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/et_first"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:hint="@string/first"
-        android:inputType="text"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@id/tv_pad"
-        app:layout_constraintRight_toRightOf="@id/tv_pad"
-        app:layout_constraintTop_toBottomOf="@id/tv_pad" />
-
-    <EditText
-        android:id="@+id/et_last"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="@string/last"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@id/tv_pad"
-        app:layout_constraintRight_toRightOf="@id/tv_pad"
-        app:layout_constraintTop_toBottomOf="@id/et_first" />
-
-    <EditText
-        android:id="@+id/et_mail"
-        android:layout_marginTop="8dp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/email"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@id/tv_pad"
-        app:layout_constraintRight_toRightOf="@id/tv_pad"
-        app:layout_constraintTop_toBottomOf="@+id/et_last" />
-
-    <EditText
-        android:id="@+id/et_pass"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="@string/pass"
-        android:inputType="textPassword"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@id/tv_pad"
-        app:layout_constraintRight_toRightOf="@id/tv_pad"
-        app:layout_constraintTop_toBottomOf="@id/et_mail" />
-
-    <EditText
-        android:id="@+id/et_confirm"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="@string/confirm"
-        android:inputType="textPassword"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@id/tv_pad"
-        app:layout_constraintRight_toRightOf="@id/tv_pad"
-        app:layout_constraintTop_toBottomOf="@id/et_pass" />
-
-
-    <EditText
-        android:id="@+id/et_merch"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_alignParentTop="true"
         android:layout_marginBottom="8dp"
-        android:hint="@string/merch_name"
-        android:visibility="invisible"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/ll_mail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/first" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_first"
+                android:layout_width="176dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/first"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/et_last"
+                android:layout_width="303dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/last"
+                android:inputType="text" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--<LinearLayout-->
+        <!--android:id="@+id/ll_last"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginBottom="13dp"-->
+        <!--android:orientation="vertical"-->
+        <!--app:layout_constraintBottom_toTopOf="@+id/ll_mail"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintHorizontal_bias="0.0"-->
+        <!--app:layout_constraintStart_toStartOf="parent">-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/last" />-->
+
+        <!--<EditText-->
+            <!--android:id="@+id/et_last"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:hint="@string/last"-->
+            <!--android:inputType="text" />-->
+    <!--</LinearLayout>-->
+
+    <LinearLayout
+        android:id="@+id/ll_mail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/ll_pass"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/email" />
+
+        <EditText
+            android:id="@+id/et_mail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/email"
+            android:inputType="text" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@id/tv_pad"
-        app:layout_constraintRight_toRightOf="@id/tv_pad"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.421">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pass" />
+
+        <EditText
+            android:id="@+id/et_pass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/pass"
+            android:inputType="textPassword" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_conf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_pass">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/confirm" />
+
+        <EditText
+            android:id="@+id/et_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/confirm"
+            android:inputType="textPassword" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_reg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        tools:layout_editor_absoluteY="18dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Merch Name " />
+
+        <EditText
+            android:id="@+id/et_merch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+    </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_regist"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="@string/sign_up"
+        android:text="@string/reg"
         android:textAppearance="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:textColor="@android:color/darker_gray"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@id/tv_login"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@id/tv_pad"
-        app:layout_constraintRight_toRightOf="@id/tv_pad"
-        app:layout_constraintTop_toBottomOf="@+id/et_merch"
-        app:layout_constraintVertical_bias="0.954" />
+        app:layout_constraintBottom_toTopOf="@+id/lla"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_login"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/lla"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/already"
-        android:textSize="15sp"
+        android:layout_marginBottom="91dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="@id/btn_regist" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <TextView
+            android:id="@+id/tv_already"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginLeft="100dp"
+            android:text="Already have account? "
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="677dp" />
 
+        <TextView
+            android:id="@+id/tv_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login"
+            android:textColor="@color/colorPrimaryDark" />
+    </LinearLayout>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

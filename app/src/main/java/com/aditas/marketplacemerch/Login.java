@@ -1,9 +1,13 @@
 package com.aditas.marketplacemerch;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,7 +18,6 @@ import com.aditas.marketplacemerch.Util.TokenManager;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
-import com.google.android.material.button.MaterialButton;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -31,14 +34,13 @@ import butterknife.OnClick;
 public class Login extends AppCompatActivity {
     @BindView(R.id.et_mail) EditText etMail;
     @BindView(R.id.et_pass) EditText etPass;
-    @BindView(R.id.btn_login)
-    Button btnLogin;
+    @BindView(R.id.btn_login) Button btnLogin;
 
     final String EMAIL = "email";
     final String PASSWORD = "password";
+    private Context ctx;
 
     AccessToken at;
-
     String email, pass;
     //int isMerch = 1; //set 1 for true, set 1 in merch and 0 in cust
 
@@ -49,17 +51,34 @@ public class Login extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick(R.id.tv_login)
+    @OnClick(R.id.tv_sign)
     public void goToRegist(){
-        Intent intent = new Intent (Login.this, Regist.class);
-        startActivity(intent);
+        Intent i = new Intent (this, Regist.class);
+        startActivity(i);
     }
 
     @OnClick(R.id.btn_login)
     public void regist(){
-        if(isValidInput() == true){
-            postDataRegist();
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo active = cm.getActiveNetworkInfo();
+        if(active != null){
+            //connect to internet
+            if(active.getType() == ConnectivityManager.TYPE_WIFI){
+                if(isValidInput() == true){
+                    postDataRegist();
+                }
+                //connect to wifi
+            } else if(active.getType() == ConnectivityManager.TYPE_MOBILE){
+                //connect to mobile data
+                if(isValidInput() == true){
+                    postDataRegist();
+                }
+            }
+        } else {
+            //not connect to internet
+            Toast.makeText(getApplicationContext(),"Not Connected To Network",Toast.LENGTH_LONG).show();
         }
+
     }
 
     private void postDataRegist() {
@@ -72,6 +91,8 @@ public class Login extends AppCompatActivity {
                         //do whatever u want with response
                         at = new Gson().fromJson(response, AccessToken.class);
                         TokenManager.getInstance(getSharedPreferences("pref", MODE_PRIVATE)).saveToken(at);
+                    Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Login Berhasil",Toast.LENGTH_SHORT).show();
                 },
                 error -> {
                         String statusCode = String.valueOf(error.networkResponse.statusCode);
@@ -95,6 +116,7 @@ public class Login extends AppCompatActivity {
                         catch (JSONException e){
                             e.printStackTrace();
                         }
+                    Toast.makeText(getApplicationContext(),statusCode, Toast.LENGTH_SHORT).show();
                 }){
 //            @Override
 //            public Map<String, String> getHeaders() throws AuthFailureError {

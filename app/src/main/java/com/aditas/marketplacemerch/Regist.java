@@ -40,7 +40,6 @@ public class Regist extends AppCompatActivity {
     final String PASSWORD = "password";
     final String CPASSWORD = "confirm_password";
     final String MERCHANT_NAME = "merchant_name";
-
     String firstName, lastName, email, password, confirm, merchName;
 
 
@@ -100,11 +99,13 @@ public class Regist extends AppCompatActivity {
                             body = new String(error.networkResponse.data, "UTF-8");
                             JSONObject res = new JSONObject(body);
 
-                            RegistErrorRes errorResponse = new Gson().fromJson(res.getJSONObject("error").toString(),RegistErrorRes.class);
+                            RegistErrorRes errorRes = new Gson()
+                                    .fromJson(res.getJSONObject("error")
+                                            .toString(),RegistErrorRes.class);
 
-                            if(errorResponse.getEmailError().size() > 0){
-                                if(errorResponse.getEmailError().get(0) != null){
-                                    etMail.setError(errorResponse.getEmailError().get(0));
+                            if(errorRes.getEmailError().size() > 0){
+                                if(errorRes.getEmailError().get(0) != null){
+                                    etMail.setError(errorRes.getEmailError().get(0));
                                 }
                             }
                         }
@@ -118,7 +119,6 @@ public class Regist extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String,String> head = new Hashtable<>();
-
                 head.put("Accept","application/json");
                 head.put("Content-Type","application/x-www-form-urlencoded");
                 return head;
@@ -135,6 +135,7 @@ public class Regist extends AppCompatActivity {
                 param.put(CPASSWORD, confirm);
                 //param.put(IS_MERCHANT,String.valueOf(isMerch));
                 param.put(MERCHANT_NAME, merchName);
+
                 return param;
             }
         };

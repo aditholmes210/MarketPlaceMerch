@@ -16,11 +16,14 @@
     <string name="email">Email</string>
     <string name="pass">Password</string>
     <string name="login">Login</string>
-    <string name="sign_up">Sign Up</string>
     <string name="first">First Name</string>
     <string name="last">Last Name</string>
     <string name="confirm">Confirm Password</string>
     <string name="merch">Want to be a merchant?</string>
     <string name="merch_name">Merchant Name</string>
-    <string name="already">Already have an account, Log in.</string>
+    <string name="already">Already have an account? </string>
+    <string name="log_in">Log In</string>
+    <string name="reg">Register</string>
+    <string name="exmail">haha@hihi.com</string>
+    <string name="exPass">123456789</string>
 </resources>

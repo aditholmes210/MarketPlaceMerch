@@ -1,4 +1,4 @@
-package com.aditas.marketplacemerch.Activity;
+package com.aditas.marketplacemerch.Adapter;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,7 +11,7 @@ import com.aditas.marketplacemerch.R;
 import java.util.ArrayList;
 
 
-public class Adapt extends BaseAdapter {
+public class SpinnerAdpt extends BaseAdapter {
     ArrayList<Category> cat = new ArrayList<>();
 
     @Override

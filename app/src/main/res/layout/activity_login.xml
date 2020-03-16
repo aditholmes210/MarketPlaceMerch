@@ -1,101 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login">
+    tools:context=".Login"
+    android:orientation="vertical">
+
 
     <TextView
-        android:id="@+id/tv_sign"
+        android:id="@+id/tv_regist"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginBottom="197dp"
-        android:text="@string/sign_in"
+        android:layout_height="55dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/log_in"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.448"
+        app:layout_constraintRight_toRightOf="@id/btn_login"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center_horizontal"/>
 
-    <EditText
-        android:id="@+id/et_mail"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/ll_mail"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_regist"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="202dp"
-        android:layout_marginLeft="202dp"
-        android:layout_marginTop="23dp"
-        android:layout_marginEnd="209dp"
-        android:layout_marginRight="209dp"
-        android:layout_marginBottom="499dp"
-        android:hint="@string/email"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@id/tv_sign"
-        app:layout_constraintRight_toRightOf="@id/tv_sign"
-        app:layout_constraintTop_toBottomOf="@id/tv_sign" />
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_regist">
 
-    <EditText
-        android:id="@+id/et_pass"
-        android:layout_width="0dp"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/email" />
+
+        <EditText
+            android:id="@+id/et_mail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/exmail" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="202dp"
-        android:layout_marginLeft="202dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="209dp"
-        android:layout_marginRight="209dp"
-        android:layout_marginBottom="315dp"
-        android:hint="@string/pass"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@id/tv_sign"
-        app:layout_constraintRight_toRightOf="@id/tv_sign"
-        app:layout_constraintTop_toBottomOf="@id/et_mail" />
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="195dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pass" />
+
+        <EditText
+            android:id="@+id/et_pass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/exPass"
+            android:inputType="textPassword"/>
+    </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_login"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:textAppearance="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="96dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@color/colorPrimaryDark"
         android:text="@string/login"
+        android:textAppearance="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:textColor="@android:color/darker_gray"
         android:textSize="20sp"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@id/tv_sign"
-        app:layout_constraintRight_toRightOf="@id/tv_sign"
-        app:layout_constraintTop_toBottomOf="@id/et_pass" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        android:gravity="center_horizontal"/>
 
-    <TextView
-        android:id="@+id/tv_regist"
-        android:layout_width="168dp"
-        android:layout_height="55dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="120dp"
-        android:layout_marginRight="120dp"
-        android:text="@string/sign_up"
-        android:textSize="15sp"
-        app:layout_constraintRight_toRightOf="@id/btn_login"
-        app:layout_constraintTop_toBottomOf="@id/btn_login" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_login"
+        android:gravity="center_horizontal">
 
-</RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Belum punya akun? " />
+
+        <TextView
+            android:id="@+id/tv_sign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="@string/reg" />
+    </LinearLayout>
+
+</LinearLayout>

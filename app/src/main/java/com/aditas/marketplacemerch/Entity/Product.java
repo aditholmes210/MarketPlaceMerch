@@ -1,8 +1,11 @@
 package com.aditas.marketplacemerch.Entity;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
-public class Product {
+public class Product implements Parcelable {
     @SerializedName("productId")
     private long id;
     @SerializedName("productQty")
@@ -75,4 +78,47 @@ public class Product {
         Product product = gson.fromJson(json, Product.class);
         return product;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(this.id);
+        dest.writeInt(this.qty);
+        dest.writeString(this.name);
+        dest.writeString(this.slug);
+        dest.writeString(this.image);
+        dest.writeParcelable(this.merch, flags);
+        dest.writeParcelable(this.catg, flags);
+        dest.writeInt(this.price);
+        dest.writeString(this.desc);
+    }
+
+    protected Product(Parcel in) {
+        this.id = in.readLong();
+        this.qty = in.readInt();
+        this.name = in.readString();
+        this.slug = in.readString();
+        this.image = in.readString();
+        this.merch = in.readParcelable(Merchant.class.getClassLoader());
+        this.catg = in.readParcelable(Category.class.getClassLoader());
+        this.price = in.readInt();
+        this.desc = in.readString();
+    }
+
+    public static final Parcelable.Creator<Product> CREATOR = new Parcelable.Creator<Product>() {
+        @Override
+        public Product createFromParcel(Parcel source) {
+            return new Product(source);
+        }
+
+        @Override
+        public Product[] newArray(int size) {
+            return new Product[size];
+        }
+    };
 }

@@ -14,18 +14,19 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.aditas.marketplacemerch.Activity.Adapt;
+import com.aditas.marketplacemerch.Activity.List;
+import com.aditas.marketplacemerch.Adapter.SpinnerAdpt;
 import com.aditas.marketplacemerch.Entity.Category;
 import com.aditas.marketplacemerch.Entity.ProdErrorRes;
+import com.aditas.marketplacemerch.Entity.Product;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -43,14 +44,18 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
 
+import static com.aditas.marketplacemerch.Activity.Detail.EXTRA_ID;
+
 public class AddPrdt extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     RequestQueue queue;
     Spinner dropDown;
     ArrayList<Category> cat;
-    Adapt adpt;
+    SpinnerAdpt adpt;
     EditText etNm, etQty, etDesc, etPrice;
     Button btnAdd, btnChoose;
     ImageView imgV;
+    Product pro;
+    //EditText ;
 
     //set default request code for intent result
     private int PICK_IMAGE_REQUEST = 1;
@@ -60,6 +65,7 @@ public class AddPrdt extends AppCompatActivity implements AdapterView.OnItemSele
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_prdt);
+        pro = getIntent().getParcelableExtra(EXTRA_ID);
 
         //Volley queue instance
         queue = Volley.newRequestQueue(getApplicationContext());
@@ -68,9 +74,17 @@ public class AddPrdt extends AppCompatActivity implements AdapterView.OnItemSele
         //Array List for hold categories from server
         cat = new ArrayList<>();
         //set categories adapter to spinner
-        adpt = new Adapt();
+        adpt = new SpinnerAdpt();
         dropDown.setAdapter(adpt);
         dropDown.setOnItemSelectedListener(this);
+
+        if (pro != null){
+            btnAdd.setText("Update Data");
+            setForm();
+        }else{
+            btnAdd.setText("Add Data");
+        }
+
         //get all categories from server
         getAllCat();
         //button choose image
@@ -83,30 +97,47 @@ public class AddPrdt extends AppCompatActivity implements AdapterView.OnItemSele
         btnAdd.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                //product to be send
-                prodName = etNm.getText().toString();
-                prodQty = etQty.getText().toString();
-                prodPrice = etPrice.getText().toString();
-                prodDesc = etDesc.getText().toString();
-                merchId = "1"; //sementara set ke 1
+                if (pro!= null){
+                    postProd();
+                }else{
+                    //product to be send
+                    prodName = etNm.getText().toString();
+                    prodQty = etQty.getText().toString();
+                    prodPrice = etPrice.getText().toString();
+                    prodDesc = etDesc.getText().toString();
+                    merchId = "1"; //sementara set ke 1
+                    Toast.makeText(AddPrdt.this, "Image can't be empty", Toast.LENGTH_LONG).show();
 
-                //check string prodImg (sdh pilih gambar dari gallery atau belum)
-                if(prodImg == null){ //jika kosong
-                    prodImg = null; // isi dengan null
+                    //check string prodImg (sdh pilih gambar dari gallery atau belum)
+                    if (prodImg == null) { //jika kosong
+                    }
+                    if (etDesc.length() == 0 || etNm.length() == 0 || etPrice.length() == 0 || etQty.length() == 0) {
+                        etQty.setError("Tidak Boleh Kosong");
+                        etDesc.setError("Tidak Boleh Kosong");
+                        etNm.setError("Tidak Boleh Kosong");
+                        etPrice.setError("Tidak Boleh Kosong");
+                    } else {
+                        Intent i = new Intent(AddPrdt.this, List.class);
+                        startActivity(i);
+                    }
+                    postProd();
                 }
-
-                postProd();
             }
         });
+    }
+
+    private void setForm(){
+        etNm.setText(pro.getName());
+        etDesc.setText(pro.getDesc());
+        etPrice.setText("Rp. "+pro.getPrice());
+        etQty.setText("Rp. "+pro.getQty());
     }
 
     private void getAllCat(){
         String url = "http://210.210.154.65:4444/api/categories"; //method GET
 
         JsonObjectRequest catReq = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
+                response -> {
                         //handle response
                         try {
                             JSONArray arr = response.getJSONArray("data");
@@ -121,14 +152,10 @@ public class AddPrdt extends AppCompatActivity implements AdapterView.OnItemSele
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                    }
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                error -> {
                         error.printStackTrace();
                         Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
-                    }
                 });
         queue.add(catReq);
 
@@ -212,9 +239,7 @@ public class AddPrdt extends AppCompatActivity implements AdapterView.OnItemSele
     private void postProd(){
         String url = "http://210.210.154.65:4444/api/products";
         final StringRequest addProdReq = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+                response -> {
                         Log.d("response : ", response);
                         try{
                             JSONObject obj = new JSONObject(response);
@@ -250,15 +275,11 @@ public class AddPrdt extends AppCompatActivity implements AdapterView.OnItemSele
                             e.printStackTrace();
                         }
                         Toast.makeText(getApplicationContext(), "Product Added", Toast.LENGTH_LONG).show();
-                    }
                 },
-            new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
+                error -> {
                 error.printStackTrace();
                 Toast.makeText(getApplicationContext(),  String.valueOf(error.networkResponse), Toast.LENGTH_LONG).show();
-            }
-        }){
+            }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new Hashtable<>();

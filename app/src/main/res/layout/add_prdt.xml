@@ -182,7 +182,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:text="@string/add_prod"
-        android:background="@color/design_default_color_error"/>
+        android:text="@string/add_prod"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

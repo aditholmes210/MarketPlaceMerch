@@ -6,13 +6,13 @@ import com.aditas.marketplacemerch.Entity.AccessToken;
 
 public class TokenManager {
     private static SharedPreferences sp;
-    private static SharedPreferences.Editor editor;
+    private static SharedPreferences.Editor edtr;
 
     private static TokenManager INSTANCE;
 
     public TokenManager(SharedPreferences pref){
         this.sp = pref;
-        this.editor = sp.edit();
+        this.edtr = sp.edit();
     }
 
     public static synchronized TokenManager getInstance(SharedPreferences pref){
@@ -23,25 +23,25 @@ public class TokenManager {
         return INSTANCE;
     }
 
-    public void saveToken(AccessToken accessToken){
-        editor.putString("TOKEN_TYPE",accessToken.getTokenType()).commit();
-        editor.putString("ACCESS_TOKEN",accessToken.getAccessToken()).commit();
-        editor.putString("REFRESH_TOKEN",accessToken.getRefreshToken()).commit();
+    public void saveToken(AccessToken at){
+        edtr.putString("TOKEN_TYPE",at.getTokenType()).commit();
+        edtr.putString("ACCESS_TOKEN",at.getAccessToken()).commit();
+        edtr.putString("REFRESH_TOKEN",at.getRefreshToken()).commit();
 
     }
 
     public void deleteToken(){
-        editor.remove("TOKEN_TYPE").commit();
-        editor.remove("ACCESS_TOKEN").commit();
-        editor.remove("REFRESH_TOKEN").commit();
+        edtr.remove("TOKEN_TYPE").commit();
+        edtr.remove("ACCESS_TOKEN").commit();
+        edtr.remove("REFRESH_TOKEN").commit();
 
     }
 
-    public AccessToken getToken(){
-        AccessToken accessToken = new AccessToken();
-        accessToken.setTokenType(sp.getString("TOKEN_TYPE",null));
-        accessToken.setAccessToken(sp.getString("ACCESS_TOKEN",null));
-        accessToken.setRefreshToken(sp.getString("REFRESH_TOKEN",null));
-        return accessToken;
+    public AccessToken getToken(AccessToken at){
+//        AccessToken at = new AccessToken();
+        at.setTokenType(sp.getString("TOKEN_TYPE",null));
+        at.setAccessToken(sp.getString("ACCESS_TOKEN",null));
+        at.setRefreshToken(sp.getString("REFRESH_TOKEN",null));
+        return at;
     }
 }
